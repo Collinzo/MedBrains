@@ -12,6 +12,7 @@ COPY Cargo.toml Cargo.lock rustfmt.toml rust-toolchain.toml ./
 COPY crates/ crates/
 COPY apps/ apps/
 COPY packages/ packages/
+COPY vendor/ vendor/
 COPY .sqlx/ .sqlx/
 RUN cargo chef prepare --recipe-path recipe.json
 
@@ -33,6 +34,7 @@ COPY Cargo.toml rustfmt.toml rust-toolchain.toml ./
 COPY crates/ crates/
 COPY apps/ apps/
 COPY packages/ packages/
+COPY vendor/ vendor/
 COPY .sqlx/ .sqlx/
 ENV SQLX_OFFLINE=true
 RUN cargo build --release --bin medbrains-server \
