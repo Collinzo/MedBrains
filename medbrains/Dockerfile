@@ -10,6 +10,8 @@ RUN cargo install cargo-chef --locked --version ^0.1
 FROM chef AS planner
 COPY Cargo.toml Cargo.lock rustfmt.toml rust-toolchain.toml ./
 COPY crates/ crates/
+COPY apps/ apps/
+COPY packages/ packages/
 COPY .sqlx/ .sqlx/
 RUN cargo chef prepare --recipe-path recipe.json
 
@@ -27,8 +29,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN cargo chef cook --release --recipe-path recipe.json --bin medbrains-server
 
 # Now copy real source and build
-COPY Cargo.toml Cargo.lock rustfmt.toml rust-toolchain.toml ./
+COPY Cargo.toml rustfmt.toml rust-toolchain.toml ./
 COPY crates/ crates/
+COPY apps/ apps/
+COPY packages/ packages/
 COPY .sqlx/ .sqlx/
 ENV SQLX_OFFLINE=true
 RUN cargo build --release --bin medbrains-server \
