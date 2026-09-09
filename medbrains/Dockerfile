@@ -8,7 +8,7 @@ WORKDIR /app
 RUN cargo install cargo-chef --locked --version ^0.1
 
 FROM chef AS planner
-COPY Cargo.toml Cargo.lock rustfmt.toml rust-toolchain.toml ./
+COPY Cargo.toml rustfmt.toml rust-toolchain.toml ./
 COPY crates/ crates/
 COPY apps/ apps/
 COPY packages/ packages/
